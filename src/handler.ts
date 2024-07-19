@@ -5,8 +5,6 @@ type Route = {
   [key: string]: (req: IncomingMessage, res: ServerResponse) => void | Promise<void>
 }
 
-const users = []
-
 const userRoutes: Route = {
   '/user:get': (req: IncomingMessage, res: ServerResponse) => {
     res.end('Hello from user routes \n')

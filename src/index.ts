@@ -5,7 +5,7 @@ import { handler } from './handler'
 const api = async () => {
   const server = createServer({
     handler,
-    port: 3210,
+    port: 3000,
   })
 
   server.start()
