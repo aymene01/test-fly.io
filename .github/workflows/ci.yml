@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  setup:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -26,23 +26,37 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-  typecheck:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: typecheck
         run: pnpm typecheck
 
   test:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: intall nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.2.0
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.5
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
       - name: test
         run: pnpm test
 
   build:
-    needs: setup
     runs-on: ubuntu-latest
+
     steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
       - name: build docker image
         run: docker build -t nodejs-fly.io .
