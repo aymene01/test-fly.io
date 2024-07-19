@@ -3,6 +3,8 @@ import { createServer } from './createServer'
 import assert from 'node:assert/strict'
 import { handler } from './handler'
 
+import { formatUrl } from './utils'
+
 const server = createServer({
   port: 3210,
   handler,
@@ -15,12 +17,6 @@ before(() => {
 after(() => {
   server.stop()
 })
-
-const BASE_URL = 'http://localhost:3210'
-
-function formatUrl(ressource: string, baseUrl = BASE_URL) {
-  return `${BASE_URL}/${ressource}`
-}
 
 test('health', async t => {
   await t.test('should return hello world', async () => {
