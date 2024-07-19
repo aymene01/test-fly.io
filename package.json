@@ -11,7 +11,8 @@
     "format": "pnpm prettier --write .",
     "test": "tsx --test src/**/*.spec.ts",
     "typecheck": "tsc --noEmit",
-    "postinstall": "pnpm prisma generate"
+    "postinstall": "pnpm prisma generate",
+    "deploy:db": "pnpm prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
