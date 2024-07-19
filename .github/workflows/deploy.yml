@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy-db:
-    name: Deploy Database Migrations
+    name: Deploy database
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
