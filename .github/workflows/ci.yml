@@ -1,5 +1,5 @@
 name: CI
-run-name: ${{ github.actor }} is integrating on GitHub Actions 🚀
+
 on:
   push:
     branches:
@@ -7,6 +7,27 @@ on:
   pull_request:
 
 jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: intall nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.2.0
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.5
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: typecheck
+        run: pnpm typecheck
+
   build:
     runs-on: ubuntu-latest
 
