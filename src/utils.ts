@@ -19,8 +19,8 @@ export function formatUrl(ressource: string, baseUrl = TEST_BASE_URL) {
   return `${baseUrl}/${ressource}`
 }
 
-export function respondWithJson<T>(res: ServerResponse, data: T) {
-    res.writeHead(200, DEFAULT_HEADER)
-    res.write(JSON.stringify(data))
-    res.end()
+export function respondWithJson<T>(res: ServerResponse, data: T, status = 200) {
+  res.writeHead(status, DEFAULT_HEADER)
+  res.write(JSON.stringify(data))
+  res.end()
 }
