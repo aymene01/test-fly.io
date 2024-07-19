@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http'
+import { IncomingMessage, ServerResponse } from 'node:http'
 import { parse } from 'node:url'
 
 const allRoutes: {
@@ -16,7 +16,7 @@ export function handler(req: IncomingMessage, res: ServerResponse) {
   const { method, url } = req
   const { pathname } = parse(url, true)
 
-  const key = `${pathname}:${method?.toLocaleLowerCase()}`
+  const key = `${pathname}:${method.toLocaleLowerCase()}`
   const choosen = allRoutes[key] || allRoutes.default
 
   return choosen(req, res)
