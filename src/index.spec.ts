@@ -22,7 +22,7 @@ test('health', async t => {
   await t.test('should return hello world', async () => {
     const response = await fetch(formatUrl('health'))
     const data = await response.text()
-    assert.strictEqual(data, 'Hello World \n')
+    assert.strictEqual(data, 'Hi there \n')
   })
 })
 
