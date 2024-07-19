@@ -1,16 +1,32 @@
 import { IncomingMessage, ServerResponse } from 'node:http'
 import { parse } from 'node:url'
 
-const allRoutes: {
+type Route = {
   [key: string]: (req: IncomingMessage, res: ServerResponse) => void | Promise<void>
-} = {
+}
+
+const users = []
+
+const userRoutes: Route = {
+  '/user:get': (req: IncomingMessage, res: ServerResponse) => {
+    res.end('Hello from user routes \n')
+  },
+}
+
+const helthRoutes: Route = {
   '/health:get': (req: IncomingMessage, res: ServerResponse) => {
     res.end('Hello World \n')
   },
-  default: (req: IncomingMessage, res: ServerResponse) => {
-    res.end('Ouuuups not found \n')
-  },
 }
+
+const buildRoutes = (...routes: Route[]) =>
+  routes.reduce((prev, curr) => ({ ...prev, ...curr }), {
+    default: (req: IncomingMessage, res: ServerResponse) => {
+      res.end('Ouuuups not found \n')
+    },
+  })
+
+const allRoutes = buildRoutes(helthRoutes, userRoutes)
 
 export function handler(req: IncomingMessage, res: ServerResponse) {
   const { method, url } = req
