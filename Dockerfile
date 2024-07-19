@@ -1,11 +1,12 @@
 # Stage 1: Build the application
 FROM node:22-alpine3.20 AS builder
 
+
 WORKDIR /app
 
 RUN npm install -g pnpm
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml ./prisma ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
@@ -20,6 +21,7 @@ RUN npm install -g pnpm
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json /app/pnpm-lock.yaml ./
+COPY --from=builder /app/prisma ./
 
 RUN pnpm install --prod
 
