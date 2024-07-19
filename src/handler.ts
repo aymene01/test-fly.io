@@ -14,6 +14,30 @@ const userRoutes: Route = {
     const users = await prisma.user.findMany()
     return respondWithJson<User[]>(res, users)
   },
+
+  '/user:post': async (req: IncomingMessage, res: ServerResponse) => {
+    let body = ''
+
+    req.on('data', chunk => {
+      body += chunk.toString()
+    })
+
+    req.on('end', async () => {
+      const parsedRequest = JSON.parse(body)
+      try {
+        const user = await prisma.user.create({
+          data: {
+            name: parsedRequest.name,
+          },
+        })
+
+        return respondWithJson(res, { user })
+      } catch (err) {
+        console.error(err)
+        respondWithJson(res, { error: 'invalid request body' }, 400)
+      }
+    })
+  },
 }
 
 const helthRoutes: Route = {
