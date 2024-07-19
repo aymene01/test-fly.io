@@ -9,14 +9,6 @@ type Route = {
   [key: string]: (req: IncomingMessage, res: ServerResponse) => void | Promise<void>
 }
 
-function validateCreateUserRequest(data: any) {
-  if (!data['name'] || data.name.length < 2) {
-    return
-  }
-
-  return
-}
-
 const userRoutes: Route = {
   '/user:get': async (req: IncomingMessage, res: ServerResponse) => {
     const users = await prisma.user.findMany()
