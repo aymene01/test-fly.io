@@ -1,18 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'node:http'
 import { parse } from 'node:url'
+import { respondWithJson } from './utils'
+import { DEFAULT_HEADER } from './constant'
 import { prisma } from './prisma'
 import { User } from '@prisma/client'
 
 type Route = {
   [key: string]: (req: IncomingMessage, res: ServerResponse) => void | Promise<void>
-}
-
-const DEFAULT_HEADER = { 'Content-Type': 'application/json' }
-
-function respondWithJson<T>(res: ServerResponse, data: T) {
-    res.writeHead(200, DEFAULT_HEADER)
-    res.write(JSON.stringify(data))
-    res.end()
 }
 
 const userRoutes: Route = {

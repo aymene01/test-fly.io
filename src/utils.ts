@@ -1,4 +1,5 @@
-import { constant } from './constant'
+import { ServerResponse } from 'node:http'
+import { constant, DEFAULT_HEADER } from './constant'
 
 type Signals = 'SIGTERM' | 'SIGINT'
 
@@ -16,4 +17,10 @@ const { TEST_BASE_URL } = constant.test
 
 export function formatUrl(ressource: string, baseUrl = TEST_BASE_URL) {
   return `${baseUrl}/${ressource}`
+}
+
+export function respondWithJson<T>(res: ServerResponse, data: T) {
+    res.writeHead(200, DEFAULT_HEADER)
+    res.write(JSON.stringify(data))
+    res.end()
 }
